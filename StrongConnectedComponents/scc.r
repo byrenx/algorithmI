@@ -130,8 +130,7 @@ DFS_stack_1st <- function(g, i){
       W <- unique(subset(g, V1==v)$V2)
       for (w in W) {
         if (!explored[w]) {
-          Q <- c(Q, w);
-          flag <- 1;
+          Q <- c(Q, w)
         }
       }
     } 
@@ -157,23 +156,23 @@ DFS_stack_2nd <- function(g, i){
 
 reversed <- function(g){ return(data.frame(V1=g$V2, V2=g$V1)) }
 
-verteces <- unique(sort(c(test$V1, test$V2)))
-finish_time <- rep(0, length(verteces))
-explored <- rep(0, length(verteces))
-t <- 0;
-for (i in rev(verteces)) {
-  if(!explored[i]) {
-    ## s <- i;
-    DFS_stack_1st(reversed(test), i)
+  verteces <- unique(sort(c(g$V1, g$V2)))
+  finish_time <- rep(0, length(verteces))
+  explored <- rep(0, length(verteces))
+  t <- 0;
+  for (i in rev(verteces)) {
+    if(!explored[i]) {
+      DFS_stack_1st(reversed(g), i)
+    }
   }
-}
+  
+  leaders <- rep(0, length(verteces))
+  s <- NULL
+  for (i in order(finish_time, decreasing = T)) {
+    if(!leaders[i]) {
+      s <- i
+      DFS_stack_2nd(g, i)
+    }
+  }
+  head(sort(table(leaders), decreasing = T))
 
-leaders <- rep(0, length(verteces))
-s <- NULL
-for (i in order(finish_time, decreasing = T)) {
-  if(!leaders[i]) {
-    s <- i
-    DFS_stack_2nd(test, i)
-  }
-}
-head(sort(table(leaders), decreasing = T))
