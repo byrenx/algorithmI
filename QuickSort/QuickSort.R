@@ -27,7 +27,7 @@ partition <- function(a, l, r, type){
   return(list(a=a, pivot=i-1))
 }
 
-m <- 0
+m <- 0 # count number of comparisons
 QuickSort <- function(a){
   n <- length(a);
   if (n==1) return(a);

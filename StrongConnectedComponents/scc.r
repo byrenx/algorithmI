@@ -126,14 +126,21 @@ DFS_stack_1st <- function(g, i){
     if(!explored[v]) {
       explored[v] <<- 1      
       t <<- t + 1
-      finish_time[v] <<- t
+      dis_time[v] <<- t
+      Q <- c(Q, w)
       W <- unique(subset(g, V1==v)$V2)
       for (w in W) {
         if (!explored[w]) {
           Q <- c(Q, w)
         }
       }
-    } 
+    }
+    else
+      if (explored[v]==1) {
+        t <<-  t + 1
+        ftime[v] <<- t
+        explored[v] <<- 2
+        }
   }
 }
 
@@ -158,6 +165,7 @@ reversed <- function(g){ return(data.frame(V1=g$V2, V2=g$V1)) }
 
   verteces <- unique(sort(c(g$V1, g$V2)))
   finish_time <- rep(0, length(verteces))
+dis_time <- rep(0, length(verteces))
   explored <- rep(0, length(verteces))
   t <- 0;
   for (i in rev(verteces)) {
