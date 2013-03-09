@@ -9,8 +9,6 @@ g = [edge.split(' ')[:2] for edge in open("SCC.txt").read().split("\n")]
 g = [map(int, edge) for edge in g]
 
 
-
-
 graph = {}
 for key, grp in itertools.groupby(sorted(g), key=operator.itemgetter(0)):
     graph[key] = map(operator.itemgetter(1), grp)
