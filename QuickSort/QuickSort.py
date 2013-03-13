@@ -23,8 +23,26 @@ def QuickSort(a):
     return a
     
     
-# numbers= open("QuickSort_hw2.txt").read().split("\r\n")
-# numbers.pop()
-# a = [int(number) for number in numbers]
+numbers= open("QuickSort_hw2.txt").read().rsplit("\r\n")
+numbers.pop()
+a = [int(number) for number in numbers]
     
 
+## functional way of quicksort
+import random
+
+def choose_and_remove( items ):
+    # pick an item index
+    if items:
+        index = random.randrange( len(items) )
+        return items.pop(index)
+    return None
+
+def QuickSortF(a):
+    if len(a) ==0:
+        return []
+    # pivot = choose_and_remove(a)
+    pivot = a.pop()
+    left = QuickSortF([x for x in a if x <= pivot])
+    right = QuickSortF([x for x in a if x > pivot])
+    return left + [pivot] + right

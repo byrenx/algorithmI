@@ -15,7 +15,6 @@ def dijkstra(graph, s):
                 for tail in graph[head].keys():
                     if not tail in X:
                         D[(head, tail)] = A[head] + graph[head][tail]
-##                D = {(head, tail):A[head] + graph[head][tail] for tail in graph[head].keys() if not tail in X}
         edge = min(D.iteritems(), key=operator.itemgetter(1))[0]
         A[edge[1]] = D[edge]
         X.append(edge[1])
@@ -33,8 +32,8 @@ if __name__=='__main__':
             vertex = vertex_list[0]
             del vertex_list[0]
             graph[int(vertex)] = {int(edge.split(',')[0]):int(edge.split(',')[1]) for edge in vertex_list}
-    short_path =  dijkstra(graph, s)
-##    print short_path
-    print [short_path[key] for key in short_path.keys() if key in [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]]
+    short_distance =  dijkstra(graph, s)
+##    print short_distance
+    print [short_distance[key] for key in short_distance.keys() if key in [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]]
     
     
