@@ -15,7 +15,7 @@ def dijkstra(graph, s):
                 for tail in graph[head].keys():
                     if not tail in X:
                         D[(head, tail)] = A[head] + graph[head][tail]
-        edge = min(D.iteritems(), key=operator.itemgetter(1))[0]
+        edge = min(D.iteritems(), key=operator.itemgetter(1))[0] # argmin
         A[edge[1]] = D[edge]
         X.append(edge[1])
     return A
@@ -28,7 +28,7 @@ if __name__=='__main__':
     for vertex_list in open(input_file).read().split('\r\n'):
         if not vertex_list == '':
             vertex_list = vertex_list.split("\t")
-            vertex_list.pop()
+            vertex_list.pop() # remove trailing empty item
             vertex = vertex_list[0]
             del vertex_list[0]
             graph[int(vertex)] = {int(edge.split(',')[0]):int(edge.split(',')[1]) for edge in vertex_list}
