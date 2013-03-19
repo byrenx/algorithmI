@@ -9,4 +9,4 @@ for number in open("Median.txt").read().strip().split("\n"):
         medianseq = medianseq + [np.median(arrayseq + [-1])]
         
 
-sum(medianseq)/10000
+

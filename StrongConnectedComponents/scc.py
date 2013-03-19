@@ -1,11 +1,11 @@
 import itertools
 import operator
-import collections
+from sys import argv
 from collections import Counter
 
 ## stack (non-recursive) implementation of DFS
 def DFS(g, i):
-    num = max(map(max, g.values()))
+    num = max(max(g.values()) + g.keys())
     explored = [0]*num
     Q = [i]
     while len(Q) > 0:
@@ -54,7 +54,7 @@ def DFS_2nd(graph, i):
     Q = [i]
     while len(Q)>0:
         v = Q.pop()
-        if not leaders[v-1]:
+        if not leaders[v-1]:           
             leaders[v-1] = s
             try:
                 W = graph[v]                   
@@ -64,8 +64,8 @@ def DFS_2nd(graph, i):
                 for w in W:
                     if not leaders[w-1]:
                         Q.append(w)
-           
-    
+
+
 def SCC(graph, graph_rev):
     num = max(map(max, graph.values())+graph.keys())
     global explored
@@ -89,4 +89,26 @@ def SCC(graph, graph_rev):
             s = i
             DFS_2nd(graph, i)
     return  Counter(leaders).most_common(5)
+
+if __name__ == '__main__':
     
+    script, filename = argv
+    g = [edge.split('\t')[:2] for edge in open(filename).read().strip().split("\r\n")]
+    #g = np.loadtxt(filename, delimiter='\t')
+    g = [map(int, edge) for edge in g]
+
+
+    graph = {}
+    for key, grp in itertools.groupby(sorted(g), key=operator.itemgetter(0)):
+        graph[key] = map(operator.itemgetter(1), grp)
+
+    ## reverse g
+    g1 = zip(*g)
+    g1 = [g1[1], g1[0]]
+    g_rev = zip(*g1)
+
+    graph_rev = {}
+    for key, grp in itertools.groupby(sorted(g_rev), key=operator.itemgetter(0)):
+        graph_rev[key] = map(operator.itemgetter(1), grp)
+
+    print SCC(graph, graph_rev)
